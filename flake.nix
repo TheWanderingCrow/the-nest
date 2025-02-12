@@ -44,7 +44,7 @@
             buildPhase = ''
               mkdir -p themes
               ln -s ${hugoThemeTerminal} themes/terminal
-              ${pkgs.hugo}/bin/hugo --minify --destination=public
+              ${pkgs.hugo}/bin/hugo --logLevel debug --minify --cleanDestinationDir --destination=public
             '';
 
             installPhase = ''

@@ -8,12 +8,75 @@ description = ""
 showFullContent = false
 readingTime = false
 hideComments = false
+draft = true
 +++
 
 The Nest uses [hugo](https://gohugo.io), a static site generator to build the
-pages. These are deployed to an S3 bucket hosted on cloudflare (yay no egress
-costs) and I can build updates using the nix flake at the project root.
+pages. These pages are then hosted on my home server, managed by nix.
 
 For those interested, nix is a functional language used primarily in
 [NixOS](https://nixos.org) for managing system configurations declaratively, but
 it's useful for many things like packaging software.
+
+For example, I have the following flake to manage my "dev" environment for the
+site, as well as making a package for the site that can be deployed on a host.
+
+```nix
+{
+  description = "wanderingcrow-site flake";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
+
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    flake-parts,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux" "aarch64-linux"];
+
+      perSystem = {pkgs, ...}: {
+        devShells.default = pkgs.mkShell {
+          name = "hugo";
+          packages = with pkgs; [
+            hugo
+            go
+          ];
+        };
+        packages.default = let
+          hugoThemeTerminal = builtins.fetchGit {
+            url = "https://github.com/panr/hugo-theme-terminal.git";
+            rev = "c7770bc85ec6754adcb7f5fbe09867c1890ecc19";
+          };
+        in
+          pkgs.stdenv.mkDerivation {
+            pname = "wanderingcrow-site";
+            version = builtins.substring 0 8 self.rev or "dirty";
+
+            src = pkgs.lib.cleanSource ./.;
+
+            nativeBuildInputs = with pkgs; [
+              git
+              hugo
+              go
+            ];
+
+            buildPhase = ''
+              mkdir -p themes
+              ln -s ${hugoThemeTerminal} themes/terminal
+              ${pkgs.hugo}/bin/hugo --minify --destination=public
+            '';
+
+            installPhase = ''
+              mkdir -p $out
+              cp -r public/* $out/
+            '';
+          };
+      };
+    };
+}
+```

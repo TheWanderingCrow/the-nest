@@ -23,35 +23,27 @@
             go
           ];
         };
-        packages.default = let
-          hugoThemeTerminal = builtins.fetchGit {
-            url = "https://github.com/panr/hugo-theme-terminal.git";
-            rev = "c7770bc85ec6754adcb7f5fbe09867c1890ecc19";
-          };
-        in
-          pkgs.stdenv.mkDerivation {
-            pname = "wanderingcrow-site";
-            version = builtins.substring 0 8 self.rev or "dirty";
+        packages.default = pkgs.stdenv.mkDerivation {
+          pname = "wanderingcrow-site";
+          version = builtins.substring 0 8 self.rev or "dirty";
 
-            src = pkgs.lib.cleanSource ./.;
+          src = pkgs.lib.cleanSource ./.;
 
-            nativeBuildInputs = with pkgs; [
-              git
-              hugo
-              go
-            ];
+          nativeBuildInputs = with pkgs; [
+            git
+            hugo
+            go
+          ];
 
-            buildPhase = ''
-              mkdir -p themes
-              ln -s ${hugoThemeTerminal} themes/terminal
-              ${pkgs.hugo}/bin/hugo --logLevel debug --minify --cleanDestinationDir --destination=public
-            '';
+          buildPhase = ''
+            ${pkgs.hugo}/bin/hugo --logLevel debug --minify --cleanDestinationDir --destination=public
+          '';
 
-            installPhase = ''
-              mkdir -p $out
-              cp -r public/* $out/
-            '';
-          };
+          installPhase = ''
+            mkdir -p $out
+            cp -r public/* $out/
+          '';
+        };
       };
     };
 }

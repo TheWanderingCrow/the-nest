@@ -1,5 +1,5 @@
 {
-  description = "wanderingcrow-site flake";
+  description = "the-nest flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

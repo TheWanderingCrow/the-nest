@@ -8,7 +8,7 @@ draft: false
 
 ## About Me
 
-My name Crow and my primary work is in the devops field with some security
+My name is Crow and my primary work is in the devops field with some security
 advising on the side. I'm a huge fan of selfhosting and that's primarily why I
 started this site. The intent of this site is honestly just for me to have a
 place to log what I'm working on across my various hobbies. If you find

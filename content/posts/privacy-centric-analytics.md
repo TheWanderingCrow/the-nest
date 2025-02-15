@@ -19,21 +19,13 @@ Looking further at their documentation we can see that it's GDPR compliant
 (doesn't collect any PII) and is cookieless, meaning we don't need an annoying
 banner popup. Seems pretty sweet!
 
-Looking over the docs it looks like we need a database, our options are mysql,
-mariadb and postgres. My personal preference is mariadb so lets stand one up
-real quick.
+There's a docker compose in here that we can translate to nix. TODO: Post
+translation
 
-```nix
-services.mysql = {
-  enable = true;
-  initialDatabases = ["umami"];
-  ensureUsers = [
-    {
-      name = "umami";
-      ensurePermissions = {
-        "umami.*" = "ALL PRIVILEGES";
-      };
-    }
-  ];
-};
-```
+Now we need some sort of app secret, I manage all my deployment secrets in SOPS
+which probably deserves its own post entirely, just know we can generate one
+pretty easily with `head -c 32 /dev/urandom | base64`. With that secret
+generated we can make a template and then define the container umami will run on
+
+TODO: Get a screenshot or smth for umami running and show how to add the umami
+tracking thingy to the base hugo templates

@@ -99,3 +99,10 @@ lib.mkIf config.user.overseer.enable {
   };
 }
 ```
+
+If you want to check out my entire NixOS configuration, have a peek over at my
+[NixOS Repo](https://github.com/TheWanderingCrow/NixOS)
+
+This site also gets some analytics about its visitors through umami. To see my
+write-up on that, go check out
+[this article](https://wanderingcrow.net/posts/privacy-centric-analytics)

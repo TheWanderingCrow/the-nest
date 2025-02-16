@@ -1,19 +1,19 @@
 +++
 title = "Privacy Centric Analytics"
-date = "2025-02-12T16:35:44-05:00"
+date = "2025-02-15T23:58:00-05:00"
 #dateFormat = "2006-01-02" # This value can be configured for per-post date formatting
-author = ""
+author = "Crow"
 authorTwitter = "" #do not include @
 cover = ""
 tags = ["nix", "selfhosting"]
 description = ""
 showFullContent = false
-draft = true
+draft = false
 +++
 
 A thing I was interested in was how I could do some tracking about who is
 visiting this site without hooking into the ugly beast that is Google Analytics.
-This led me to find (umami)[https://github.com/umami-software/umami], which
+This led me to find [umami](https://github.com/umami-software/umami), which
 claims to be "a simple, fast, privacy-focused alternative to Google Analytics".
 Looking further at their documentation we can see that it's GDPR compliant
 (doesn't collect any PII) and is cookieless, meaning we don't need an annoying
@@ -53,5 +53,8 @@ that needs to be placed in the head of all our html files. This is pretty simple
 in hugo, according to the readme for this theme, we just need to create a
 directory at `layouts/partials/extended_head.html`
 
-TODO: Get a screenshot or smth for umami running and show how to add the umami
-tracking thingy to the base hugo templates
+Here's a quick before and after shot, showing off the tracking stats and the
+clean interface.
+
+![Umami new site](new-site.png)
+![Umami with my traffic showing up in the stats](stats.png)

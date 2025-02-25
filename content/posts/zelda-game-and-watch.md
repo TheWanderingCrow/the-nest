@@ -19,3 +19,11 @@ ago. Recently I decided to open it up to see what was in there and as I expected
 it was pretty simple.
 
 // disassembly notes here
+
+// spi pinout located here
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/8909/MX25U3232F,%201.8V,%2032Mb,%20v1.2.pdf
+
+`flashrom -p ft2232_spi:type=2232H,port=B,divisor=4 -c "MX25U3235E/F" -r dump.bin`
+
+13a5565831dfb49f16700cf07dad88f6 dump.bin 13a5565831dfb49f16700cf07dad88f6
+dump2.bin
